@@ -7,3 +7,7 @@ create table url(
 
 create index url_cut_url_index
     on url (cut_url);
+
+INSERT INTO url (cut_url, full_url) VALUES ('g','google.com');
+INSERT INTO url (cut_url, full_url) VALUES ('y','yandex.ru');
+INSERT INTO url (cut_url, full_url) VALUES ('gm','gmail.com');
