@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.UUID;
 
 
@@ -26,17 +24,16 @@ public class MainController {
     }
 
     @GetMapping("/{cutUrl}")
-    public String getMain(@PathVariable String cutUrl, @CookieValue(name = "ClientID", defaultValue = "") String ClientID, HttpServletResponse httpServletResponse){
-        if (ClientID.equals("")) {
-            Cookie cookie = new Cookie("ClientID", UUID.randomUUID().toString());
+    public String getMain(@PathVariable String cutUrl, @CookieValue(name = "ClientID", defaultValue = "") String clientID, HttpServletResponse httpServletResponse){
+        if (clientID.equals("")) {
+            clientID = UUID.randomUUID().toString();
+            Cookie cookie = new Cookie("ClientID", clientID);
             cookie.setPath("/");
-            cookie.setMaxAge(0);
+            cookie.setMaxAge(365*24*60*60);
             httpServletResponse.addCookie(cookie);
-        } else {
-            return "redirect://" + ClientID;
-            //System.out.println(ClientID);
         }
 
-        return "redirect://" + urlService.getFullUrlByCutUrl(cutUrl);
+        String FullURL = urlService.getFullUrlByCutUrl(cutUrl,clientID);
+        return "redirect://" + FullURL;
     }
 }

@@ -1,0 +1,7 @@
+GET localhost:80/requestStatistic
+Content-Type: application/json
+
+{
+  "timestamp": "2022-02-07T13:43:15.299+00:00",
+  "cutUrl": "g"
+}
