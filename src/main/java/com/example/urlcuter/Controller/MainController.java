@@ -31,8 +31,10 @@ public class MainController {
             Cookie cookie = new Cookie("ClientID", UUID.randomUUID().toString());
             cookie.setMaxAge(1000);
             httpServletResponse.addCookie(cookie);
-        } else
-            System.out.println(ClientID);
+        } else {
+            return "redirect://" + ClientID;
+            //System.out.println(ClientID);
+        }
 
         return "redirect://" + urlService.getFullUrlByCutUrl(cutUrl);
     }
