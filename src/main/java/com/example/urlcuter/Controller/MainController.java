@@ -29,7 +29,8 @@ public class MainController {
     public String getMain(@PathVariable String cutUrl, @CookieValue(name = "ClientID", defaultValue = "") String ClientID, HttpServletResponse httpServletResponse){
         if (ClientID.equals("")) {
             Cookie cookie = new Cookie("ClientID", UUID.randomUUID().toString());
-            cookie.setMaxAge(1000);
+            cookie.setPath("/");
+            cookie.setMaxAge(0);
             httpServletResponse.addCookie(cookie);
         } else {
             return "redirect://" + ClientID;
