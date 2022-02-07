@@ -25,7 +25,7 @@ public class DatabaseConfig {
         hikariConfig.setJdbcUrl(environment.getProperty("spring.datasource.url"));
         hikariConfig.setUsername(environment.getProperty("spring.datasource.username"));
         hikariConfig.setPassword(environment.getProperty("spring.datasource.password"));
-        hikariConfig.setMaximumPoolSize(5);
+        hikariConfig.setMaximumPoolSize(15);
 
         return new HikariDataSource(hikariConfig);
     }
