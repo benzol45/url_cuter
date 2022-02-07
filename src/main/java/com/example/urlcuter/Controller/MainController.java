@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Controller
 @RequestMapping("/")
 public class MainController {
-    @GetMapping("/")
+    @GetMapping()
     public String getMain(){
         return "redirect:/google.com";
     }
