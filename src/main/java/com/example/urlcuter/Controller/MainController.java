@@ -1,20 +1,22 @@
 package com.example.urlcuter.Controller;
 
+import com.example.urlcuter.Entity.UrlMapper;
 import com.example.urlcuter.Service.UrlService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 
 @Controller
-@RequestMapping("/cut")
 public class MainController {
     private final UrlService urlService;
 
@@ -23,7 +25,7 @@ public class MainController {
         this.urlService = urlService;
     }
 
-    @GetMapping("/{cutUrl}")
+    @GetMapping("/cut/{cutUrl}")
     public String getMain(@PathVariable String cutUrl, @CookieValue(name = "ClientID", defaultValue = "") String clientID, HttpServletResponse httpServletResponse){
         if (clientID.equals("")) {
             clientID = UUID.randomUUID().toString();
@@ -35,5 +37,16 @@ public class MainController {
 
         String goTo = urlService.processingVizit(cutUrl,clientID);
         return "redirect:" + goTo;
+    }
+
+    @GetMapping("/add")
+    public String getAdd(Model model){
+        //TODO Добавить авторизацию
+        List<UrlMapper> urlMappers = urlService.getAllUrlMappers();
+        model.addAttribute("urlMappers",urlMappers);
+
+        model.addAttribute("addedUrlMapper",new UrlMapper("t","test"));
+
+        return "add";
     }
 }

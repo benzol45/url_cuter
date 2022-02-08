@@ -20,6 +20,7 @@ public class UrlApiController {
 
     @PostMapping
     public void addUrl(@RequestBody UrlMapper urlMapper) {
+        //TODO Добавить авторизацию по токену
         urlService.addNewUrlMapper(urlMapper);
     }
 }

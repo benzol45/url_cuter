@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -23,19 +24,7 @@ public class UrlRepositoryImpl implements UrlRepository {
 
     @Override
     public Optional<UrlMapper> getUrlMapperByCutUrl(String cutUrl) {
-        RowMapper<UrlMapper> rowMapper = (rs, rowNum) -> {
-            String cutUrl1 = rs.getString("cut_url");
-            String fullUrl = rs.getString("full_url");
-            Timestamp timestamp = rs.getTimestamp("live_time");
-            LocalDateTime dateTime = null;
-            if (timestamp!=null) {
-                 dateTime = timestamp.toLocalDateTime();
-            }
-
-            UrlMapper urlMapper = new UrlMapper(cutUrl1,fullUrl);
-            urlMapper.setLiveTime(dateTime);
-            return urlMapper;
-        };
+        RowMapper<UrlMapper> rowMapper = getRowMapperUrlMapper();
 
         try {
             //language=sql
@@ -56,5 +45,31 @@ public class UrlRepositoryImpl implements UrlRepository {
     @Override
     public void addNewUrlMapper(UrlMapper urlMapper) {
         jdbcTemplate.update("INSERT INTO url (cut_url, full_url, live_time) VALUES (?,?,?)",urlMapper.getCutUrl(),urlMapper.getFullUrl(),urlMapper.getLiveTimeTimestamp());
+    }
+
+    @Override
+    public List<UrlMapper> getAllUrlMappers() {
+        RowMapper<UrlMapper> rowMapper = getRowMapperUrlMapper();
+        //language=sql
+        List<UrlMapper> urlMappers = jdbcTemplate.query("SELECT * FROM url",rowMapper);
+        return urlMappers;
+    }
+
+    private RowMapper<UrlMapper> getRowMapperUrlMapper(){
+        RowMapper<UrlMapper> rowMapper = (rs, rowNum) -> {
+            String cutUrl1 = rs.getString("cut_url");
+            String fullUrl = rs.getString("full_url");
+            Timestamp timestamp = rs.getTimestamp("live_time");
+            LocalDateTime dateTime = null;
+            if (timestamp!=null) {
+                dateTime = timestamp.toLocalDateTime();
+            }
+
+            UrlMapper urlMapper = new UrlMapper(cutUrl1,fullUrl);
+            urlMapper.setLiveTime(dateTime);
+            return urlMapper;
+        };
+
+        return rowMapper;
     }
 }

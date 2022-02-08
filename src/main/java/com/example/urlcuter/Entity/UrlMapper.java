@@ -40,6 +40,14 @@ public class UrlMapper {
         }
     }
 
+    public String getLiveTimePresentation() {
+        if (liveTime!=null) {
+            return liveTime.toString();
+        } else {
+            return "";
+        }
+    }
+
     public void setLiveTimeTimestamp(Timestamp liveTimeTimestamp) {
         this.liveTime = liveTimeTimestamp.toLocalDateTime();
     }

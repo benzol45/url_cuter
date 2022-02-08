@@ -35,7 +35,7 @@ public class UrlController {
 
     @GetMapping("/delete/{cutUrl}")
     public void deleteCutUrl(@PathVariable("cutUrl") String cutUrl) {
-        //TODO Реализовать удалиен ссылки
+        //TODO Реализовать удаление ссылки
         throw new IllegalArgumentException("Не реализовано");
     }
 }
