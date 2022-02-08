@@ -1,7 +1,7 @@
 package com.example.urlcuter.Service;
 
-import com.example.urlcuter.Entity.UrlMapper;
+import java.time.LocalDateTime;
 
 public interface VizitService {
-    void registerVizit(String cutUrl, String clientID);
+    void registerVizit(LocalDateTime eventDateTime, String cutUrl, String fullUrl, String clientID);
 }

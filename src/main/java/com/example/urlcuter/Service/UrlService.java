@@ -3,6 +3,7 @@ package com.example.urlcuter.Service;
 import com.example.urlcuter.Entity.UrlMapper;
 
 public interface UrlService {
-    String getFullUrlByCutUrl(String cutUrl, String clientID);
+    String processingVizit(String cutUrl, String clientID);
+    String getFullUrlByCutUrl(String cutUrl);
     void addNewUrlMapper(UrlMapper urlMapper);
 }

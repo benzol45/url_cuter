@@ -24,26 +24,47 @@ public class UrlServiceImpl implements UrlService {
     }
 
     @Override
-    public String getFullUrlByCutUrl(String cutUrl, String clientID) {
-        vizitService.registerVizit(cutUrl, clientID);
+    public String processingVizit(String cutUrl, String clientID) {
+        String goTo="";
+
+        String fullUrl = getFullUrlByCutUrl(cutUrl);
+        if (fullUrl.equals("NotFound")) {
+            goTo = "/NotFound.html";
+        } else if (fullUrl.equals("Exist")) {
+            goTo = "/Exist.html";
+        } else {
+            goTo = "//"+fullUrl;
+        }
+
+        //TODO реализовать
+        vizitService.registerVizit(LocalDateTime.now(),cutUrl, fullUrl, clientID);
+
+        return goTo;
+    }
+
+    @Override
+    public String getFullUrlByCutUrl(String cutUrl) {
         Optional<UrlMapper> optionalUrlMapper = urlRepository.getUrlMapperByCutUrl(cutUrl);
         if (optionalUrlMapper.isPresent()) {
             UrlMapper urlMapper = optionalUrlMapper.get();
 
             if (urlMapper.getLiveTime()!=null && urlMapper.getLiveTime().compareTo(LocalDateTime.now())<0) {
-                return "exist";
+                return "Exist";
             }
 
             return urlMapper.getFullUrl();
 
         } else {
 
-            return "404page";
+            return "NotFound";
         }
     }
 
     @Override
     public void addNewUrlMapper(UrlMapper urlMapper) {
-        urlRepository.addNewUrlMapper(urlMapper);
+        //TODO Реализовать генерацию короткой ссылки и подставлять в объяект
+        if (!urlRepository.existCutUrl(urlMapper.getCutUrl())) {
+            urlRepository.addNewUrlMapper(urlMapper);
+        }
     }
 }

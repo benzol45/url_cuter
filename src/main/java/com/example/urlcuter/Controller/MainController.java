@@ -33,7 +33,7 @@ public class MainController {
             httpServletResponse.addCookie(cookie);
         }
 
-        String FullURL = urlService.getFullUrlByCutUrl(cutUrl,clientID);
-        return "redirect://" + FullURL;
+        String goTo = urlService.processingVizit(cutUrl,clientID);
+        return "redirect:" + goTo;
     }
 }

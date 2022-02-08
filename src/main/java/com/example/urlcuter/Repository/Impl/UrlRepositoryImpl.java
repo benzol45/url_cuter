@@ -48,12 +48,13 @@ public class UrlRepositoryImpl implements UrlRepository {
 
     @Override
     public boolean existCutUrl(String cutUrl) {
-        return false;
+        //language=sql
+        int count = jdbcTemplate.queryForObject("SELECT count(*) FROM url WHERE cut_url=?",Integer.class, cutUrl);
+        return count>0;
     }
 
     @Override
     public void addNewUrlMapper(UrlMapper urlMapper) {
         jdbcTemplate.update("INSERT INTO url (cut_url, full_url, live_time) VALUES (?,?,?)",urlMapper.getCutUrl(),urlMapper.getFullUrl(),urlMapper.getLiveTimeTimestamp());
-
     }
 }
