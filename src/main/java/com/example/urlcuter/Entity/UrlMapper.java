@@ -20,6 +20,10 @@ public class UrlMapper {
         return cutUrl;
     }
 
+    public void setCutUrl(String cutUrl) {
+        this.cutUrl = cutUrl;
+    }
+
     public String getFullUrl() {
         return fullUrl;
     }

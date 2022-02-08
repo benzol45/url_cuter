@@ -8,23 +8,37 @@
     <title>Document</title>
 </head>
 <body>
-    <h3>New url:</h3>
+    <h1><a href="/"><--</a></h1>
+    <h2>Add new url:</h2>
+    <h3>
     <form method="post" action="/url">
-        <input type="datetime-local" name="datetime">
-        <input type="text" name="full_url">
-        <input type="submit" value="Отправить">
+        <label>Target URL
+            <input type="text" name="full_url">
+        </label>
+        <br>
+        <br>
+        <label>Live time
+            <input type="datetime-local" name="datetime">
+        </label>
+        <br>
+        <br>
+        <input type="submit" value="Create">
     </form>
+    </h3>
     <br>
 
     <#if addedUrlMapper??>
-        <h3>Add url:</h3>
-        cut url: ${addedUrlMapper.cutUrl}
-        full url: ${addedUrlMapper.fullUrl}
-        live time: ${addedUrlMapper.liveTimePresentation}
+        <h2>Add url:</h2>
+        <h3>
+        cut url: ${addedUrlMapper.cutUrl}<br>
+        go: <a href="/cut/${addedUrlMapper.cutUrl}">/cut/${addedUrlMapper.cutUrl}</a><br>
+        full url: ${addedUrlMapper.fullUrl}<br>
+        live time: ${addedUrlMapper.liveTimePresentation}<br>
+        </h3>
         <br>
     </#if>
 
-    <h3>Active url:</h3>
+    <h2>Active url:</h2>
     <table border="1">
         <tr>
             <th>go to</th>
@@ -35,11 +49,11 @@
         </tr>
     <#list urlMappers as urlMapper>
         <tr>
-            <td></td>
+            <td><a href="/cut/${urlMapper.cutUrl}">/cut/${urlMapper.cutUrl}</a></td>
             <td>${urlMapper.cutUrl}</td>
             <td>${urlMapper.fullUrl}</td>
             <td>${urlMapper.liveTimePresentation}</td>
-            <td></td>
+            <td><a href="/url/delete/${urlMapper.cutUrl}">X</a></td>
         </tr>
     </#list>
     </table>

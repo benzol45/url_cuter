@@ -51,8 +51,13 @@ public class UrlRepositoryImpl implements UrlRepository {
     public List<UrlMapper> getAllUrlMappers() {
         RowMapper<UrlMapper> rowMapper = getRowMapperUrlMapper();
         //language=sql
-        List<UrlMapper> urlMappers = jdbcTemplate.query("SELECT * FROM url",rowMapper);
+        List<UrlMapper> urlMappers = jdbcTemplate.query("SELECT * FROM url ORDER BY id desc",rowMapper);
         return urlMappers;
+    }
+
+    @Override
+    public void removeByCutUrl(String cutUrl) {
+        jdbcTemplate.update("DELETE FROM url WHERE cut_url=?",cutUrl);
     }
 
     private RowMapper<UrlMapper> getRowMapperUrlMapper(){

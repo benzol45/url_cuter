@@ -9,4 +9,5 @@ public interface UrlService {
     String getFullUrlByCutUrl(String cutUrl);
     void addNewUrlMapper(UrlMapper urlMapper);
     List<UrlMapper> getAllUrlMappers();
+    void removeByCutUrl(String cutUrl);
 }

@@ -12,9 +12,10 @@ public class StatisticApiController {
     @GetMapping
     @ResponseBody
     public StatisticResponse getStatistic(@RequestBody StatisticRequest statisticRequest) {
+        //TODO заменить заглушку на реализацию
         StatisticResponse statisticResponse = new StatisticResponse();
-        statisticResponse.getStatisticRows().add(new StatisticRow("g",1));
-        statisticResponse.getStatisticRows().add(new StatisticRow("y",1));
+//        statisticResponse.getStatisticRows().add(new StatisticRow("g",1));
+//        statisticResponse.getStatisticRows().add(new StatisticRow("y",1));
         return statisticResponse;
     }
 }

@@ -23,4 +23,6 @@ public class UrlApiController {
         //TODO Добавить авторизацию по токену
         urlService.addNewUrlMapper(urlMapper);
     }
+
+    //TODO Добавить удаление из API
 }

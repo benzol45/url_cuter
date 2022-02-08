@@ -10,4 +10,5 @@ public interface UrlRepository {
     boolean existCutUrl(String cutUrl);
     void addNewUrlMapper(UrlMapper urlMapper);
     List<UrlMapper> getAllUrlMappers();
+    void removeByCutUrl(String cutUrl);
 }

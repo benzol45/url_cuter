@@ -2,6 +2,7 @@ package com.example.urlcuter.Controller;
 
 import com.example.urlcuter.Entity.UrlMapper;
 import com.example.urlcuter.Service.UrlService;
+import com.example.urlcuter.Service.VizitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,10 +20,18 @@ import java.util.UUID;
 @Controller
 public class MainController {
     private final UrlService urlService;
+    private final VizitService vizitService;
 
     @Autowired
-    public MainController(UrlService urlService) {
+    public MainController(UrlService urlService, VizitService vizitService) {
         this.urlService = urlService;
+        this.vizitService = vizitService;
+    }
+
+    @GetMapping("/")
+    public String getIndex(Model model) {
+        model.addAttribute("statistic",vizitService.getPopular(10));
+        return "index";
     }
 
     @GetMapping("/cut/{cutUrl}")
@@ -37,16 +46,5 @@ public class MainController {
 
         String goTo = urlService.processingVizit(cutUrl,clientID);
         return "redirect:" + goTo;
-    }
-
-    @GetMapping("/add")
-    public String getAdd(Model model){
-        //TODO Добавить авторизацию
-        List<UrlMapper> urlMappers = urlService.getAllUrlMappers();
-        model.addAttribute("urlMappers",urlMappers);
-
-        model.addAttribute("addedUrlMapper",new UrlMapper("t","test"));
-
-        return "add";
     }
 }

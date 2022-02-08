@@ -3,18 +3,16 @@ package com.example.urlcuter.Controller;
 import com.example.urlcuter.Entity.UrlMapper;
 import com.example.urlcuter.Service.UrlService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 
 @Controller
-@RequestMapping("/url")
 public class UrlController {
     UrlService urlService;
 
@@ -23,19 +21,39 @@ public class UrlController {
         this.urlService = urlService;
     }
 
-    @PostMapping
-    public void addUrl(@RequestParam("datetime")String datetime) {
-        System.out.println(datetime);
-        if (!datetime.equals("")) {
-            LocalDateTime ldt = LocalDateTime.parse(datetime, DateTimeFormatter.ISO_DATE_TIME);
-        } else {
-            LocalDateTime ldt = null;
-        }
+    @GetMapping("/add")
+    public String getAdd(Model model){
+        //TODO Добавить авторизацию
+        List<UrlMapper> urlMappers = urlService.getAllUrlMappers();
+        model.addAttribute("urlMappers",urlMappers);
+
+        return "add";
     }
 
-    @GetMapping("/delete/{cutUrl}")
-    public void deleteCutUrl(@PathVariable("cutUrl") String cutUrl) {
-        //TODO Реализовать удаление ссылки
-        throw new IllegalArgumentException("Не реализовано");
+    @PostMapping("/url")
+    public String addUrl(@RequestParam("datetime")String datetime, @RequestParam("full_url")String full_url, Model model) {
+        LocalDateTime ldt;
+        if (!datetime.equals("")) {
+            ldt = LocalDateTime.parse(datetime, DateTimeFormatter.ISO_DATE_TIME);
+        } else {
+            ldt = null;
+        }
+
+        UrlMapper urlMapper = new UrlMapper(null,full_url);
+        urlMapper.setLiveTime(ldt);
+        urlService.addNewUrlMapper(urlMapper);
+        model.addAttribute("addedUrlMapper",urlMapper);
+
+        List<UrlMapper> urlMappers = urlService.getAllUrlMappers();
+        model.addAttribute("urlMappers",urlMappers);
+
+        return "add";
+    }
+
+    @GetMapping("/url/delete/{cutUrl}")
+    public String deleteCutUrl(@PathVariable("cutUrl") String cutUrl) {
+        urlService.removeByCutUrl(cutUrl);
+
+        return "redirect:/add";
     }
 }
