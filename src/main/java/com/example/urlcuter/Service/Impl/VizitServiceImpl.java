@@ -1,5 +1,6 @@
 package com.example.urlcuter.Service.Impl;
 
+import com.example.urlcuter.Entity.UrlMapper;
 import com.example.urlcuter.Entity.Vizit;
 import com.example.urlcuter.Repository.VizitRepository;
 import com.example.urlcuter.Service.VizitService;
@@ -24,4 +25,5 @@ public class VizitServiceImpl implements VizitService {
         Vizit vizit = new Vizit(LocalDateTime.now(), UUID.fromString(clientID),cutUrl);
         vizitRepository.addVizit(vizit);
     }
+
 }

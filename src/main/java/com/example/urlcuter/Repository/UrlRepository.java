@@ -5,8 +5,8 @@ import com.example.urlcuter.Entity.UrlMapper;
 import java.util.Optional;
 
 public interface UrlRepository {
-    Optional<UrlMapper> getFullUrlByCutUrl(String cutUrl);
+    Optional<UrlMapper> getUrlMapperByCutUrl(String cutUrl);
     boolean existCutUrl(String cutUrl);
-    void addNewUrlPair(String fullUrl, String cutUrl);
+    void addNewUrlMapper(UrlMapper urlMapper);
 
 }

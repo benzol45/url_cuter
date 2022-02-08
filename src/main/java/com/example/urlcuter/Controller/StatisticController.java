@@ -6,7 +6,7 @@ import com.example.urlcuter.DTO.StatisticRow;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/requestStatistic")
+@RequestMapping("/api/requestStatistic")
 public class StatisticController {
 
     @GetMapping

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Optional;
 
@@ -25,11 +26,11 @@ public class UrlServiceImpl implements UrlService {
     @Override
     public String getFullUrlByCutUrl(String cutUrl, String clientID) {
         vizitService.registerVizit(cutUrl, clientID);
-        Optional<UrlMapper> optionalUrlMapper = urlRepository.getFullUrlByCutUrl(cutUrl);
+        Optional<UrlMapper> optionalUrlMapper = urlRepository.getUrlMapperByCutUrl(cutUrl);
         if (optionalUrlMapper.isPresent()) {
             UrlMapper urlMapper = optionalUrlMapper.get();
 
-            if (urlMapper.getLiveTime()!=null && urlMapper.getLiveTime().compareTo(new Date())<0) {
+            if (urlMapper.getLiveTime()!=null && urlMapper.getLiveTime().compareTo(LocalDateTime.now())<0) {
                 return "exist";
             }
 
@@ -39,5 +40,10 @@ public class UrlServiceImpl implements UrlService {
 
             return "404page";
         }
+    }
+
+    @Override
+    public void addNewUrlMapper(UrlMapper urlMapper) {
+        urlRepository.addNewUrlMapper(urlMapper);
     }
 }

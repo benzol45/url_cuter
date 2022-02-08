@@ -1,16 +1,19 @@
 package com.example.urlcuter.Entity;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
-import java.util.Date;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 
 public class UrlMapper {
     private String cutUrl;
     private String fullUrl;
-    private Date liveTime;
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
+    private LocalDateTime liveTime;
 
-    public UrlMapper(String cutUrl, String fullUrl, Date liveTime) {
+    public UrlMapper(String cutUrl, String fullUrl) {
         this.cutUrl = cutUrl;
         this.fullUrl = fullUrl;
-        this.liveTime = liveTime;
     }
 
     public String getCutUrl() {
@@ -21,7 +24,23 @@ public class UrlMapper {
         return fullUrl;
     }
 
-    public Date getLiveTime() {
+    public LocalDateTime getLiveTime() {
         return liveTime;
+    }
+
+    public void setLiveTime(LocalDateTime liveTime) {
+        this.liveTime = liveTime;
+    }
+
+    public Timestamp getLiveTimeTimestamp() {
+        if (liveTime!=null) {
+            return Timestamp.valueOf(liveTime);
+        } else {
+            return null;
+        }
+    }
+
+    public void setLiveTimeTimestamp(Timestamp liveTimeTimestamp) {
+        this.liveTime = liveTimeTimestamp.toLocalDateTime();
     }
 }

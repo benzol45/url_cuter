@@ -10,8 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.Optional;
 
 @Repository
@@ -24,17 +22,19 @@ public class UrlRepositoryImpl implements UrlRepository {
     }
 
     @Override
-    public Optional<UrlMapper> getFullUrlByCutUrl(String cutUrl) {
+    public Optional<UrlMapper> getUrlMapperByCutUrl(String cutUrl) {
         RowMapper<UrlMapper> rowMapper = (rs, rowNum) -> {
             String cutUrl1 = rs.getString("cut_url");
             String fullUrl = rs.getString("full_url");
             Timestamp timestamp = rs.getTimestamp("live_time");
-            Date liveTime = null;
+            LocalDateTime dateTime = null;
             if (timestamp!=null) {
-                LocalDateTime dateTime = timestamp.toLocalDateTime();
-                liveTime = Date.from(dateTime.atZone(ZoneId.systemDefault()).toInstant());
+                 dateTime = timestamp.toLocalDateTime();
             }
-            return new UrlMapper(cutUrl1,fullUrl,liveTime);
+
+            UrlMapper urlMapper = new UrlMapper(cutUrl1,fullUrl);
+            urlMapper.setLiveTime(dateTime);
+            return urlMapper;
         };
 
         try {
@@ -52,7 +52,8 @@ public class UrlRepositoryImpl implements UrlRepository {
     }
 
     @Override
-    public void addNewUrlPair(String fullUrl, String cutUrl) {
+    public void addNewUrlMapper(UrlMapper urlMapper) {
+        jdbcTemplate.update("INSERT INTO url (cut_url, full_url, live_time) VALUES (?,?,?)",urlMapper.getCutUrl(),urlMapper.getFullUrl(),urlMapper.getLiveTimeTimestamp());
 
     }
 }
