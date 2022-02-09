@@ -1,5 +1,7 @@
 package com.example.urlcuter.Service.Impl;
 
+import com.example.urlcuter.DTO.StatisticRequest;
+import com.example.urlcuter.DTO.StatisticResponse;
 import com.example.urlcuter.DTO.StatisticRow;
 import com.example.urlcuter.Entity.Vizit;
 import com.example.urlcuter.Repository.VizitRepository;
@@ -28,6 +30,11 @@ public class VizitServiceImpl implements VizitService {
     @Override
     public List<StatisticRow> getPopular(int limit) {
         return vizitRepository.getPopular(limit);
+    }
+
+    @Override
+    public StatisticResponse getStatistic(StatisticRequest statisticRequest) {
+        return new StatisticResponse(vizitRepository.getStatistic(statisticRequest));
     }
 
 }

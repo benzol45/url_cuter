@@ -28,6 +28,10 @@ public class UrlMapper {
         return fullUrl;
     }
 
+    public void setFullUrl(String fullUrl) {
+        this.fullUrl = fullUrl;
+    }
+
     public LocalDateTime getLiveTime() {
         return liveTime;
     }

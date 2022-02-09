@@ -14,14 +14,14 @@ import java.util.List;
 
 @Controller
 public class UrlController {
-    UrlService urlService;
+    private final UrlService urlService;
 
     @Autowired
     public UrlController(UrlService urlService) {
         this.urlService = urlService;
     }
 
-    @GetMapping("/add")
+    @GetMapping("/url")
     public String getAdd(Model model){
         //TODO Добавить авторизацию
         List<UrlMapper> urlMappers = urlService.getAllUrlMappers();
@@ -54,6 +54,6 @@ public class UrlController {
     public String deleteCutUrl(@PathVariable("cutUrl") String cutUrl) {
         urlService.removeByCutUrl(cutUrl);
 
-        return "redirect:/add";
+        return "redirect:/url";
     }
 }

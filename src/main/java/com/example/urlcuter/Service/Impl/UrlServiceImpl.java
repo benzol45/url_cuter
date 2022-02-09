@@ -65,7 +65,7 @@ public class UrlServiceImpl implements UrlService {
 
     @Override
     public void addNewUrlMapper(UrlMapper urlMapper) {
-        //TODO отрезать http,https, ://
+        CleanFullUrl(urlMapper);
         urlMapper.setCutUrl(generateNewCutUrl());
         urlRepository.addNewUrlMapper(urlMapper);
     }
@@ -79,6 +79,25 @@ public class UrlServiceImpl implements UrlService {
     public void removeByCutUrl(String cutUrl) {
         if (urlRepository.existCutUrl(cutUrl)) {
             urlRepository.removeByCutUrl(cutUrl);
+        }
+    }
+
+    private void CleanFullUrl(UrlMapper urlMapper) {
+        String fullUrlForCleaning = urlMapper.getFullUrl();
+        if (fullUrlForCleaning.startsWith("https")) {
+            fullUrlForCleaning = fullUrlForCleaning.substring(5);
+        } else if (fullUrlForCleaning.startsWith("http")) {
+            fullUrlForCleaning = fullUrlForCleaning.substring(4);
+        }
+
+        if (fullUrlForCleaning.startsWith("://")) {
+            fullUrlForCleaning = fullUrlForCleaning.substring(3);
+        } else if (fullUrlForCleaning.startsWith("//")) {
+            fullUrlForCleaning = fullUrlForCleaning.substring(2);
+        }
+
+        if (!urlMapper.getFullUrl().equals(fullUrlForCleaning)) {
+            urlMapper.setFullUrl(fullUrlForCleaning);
         }
     }
 

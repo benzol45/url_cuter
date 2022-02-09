@@ -1,5 +1,7 @@
 package com.example.urlcuter.Service;
 
+import com.example.urlcuter.DTO.StatisticRequest;
+import com.example.urlcuter.DTO.StatisticResponse;
 import com.example.urlcuter.DTO.StatisticRow;
 
 import java.time.LocalDateTime;
@@ -9,4 +11,5 @@ public interface VizitService {
     void registerVizit(LocalDateTime eventDateTime, String cutUrl, String fullUrl, String clientID);
 
     List<StatisticRow> getPopular(int limit);
+    StatisticResponse getStatistic(StatisticRequest statisticRequest);
 }

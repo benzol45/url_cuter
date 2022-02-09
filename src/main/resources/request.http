@@ -1,12 +1,3 @@
-GET localhost:80/api/requestStatistic
-Content-Type: application/json
-
-{
-  "cutUrl": "g"
-}
-
-###
-
 POST localhost:80/api/url
 Content-Type: application/json
 
@@ -16,3 +7,25 @@ Content-Type: application/json
   "liveTime": "07-01-2022 11:10:09"
 }
 
+###
+
+DELETE localhost:80/api/url
+Content-Type: application/json
+
+{
+  "cutUrl": "1"
+}
+
+###
+
+GET localhost:80/api/requestStatistic
+Content-Type: application/json
+
+{
+  "cutUrlFilter": "g",
+  "fromDateFilter": "08-02-2022 09:00:00",
+  "toDateFilter": "08-02-2022 16:00:00",
+  "limit": "2"
+}
+
+###
