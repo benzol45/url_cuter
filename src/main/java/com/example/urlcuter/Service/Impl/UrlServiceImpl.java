@@ -77,6 +77,11 @@ public class UrlServiceImpl implements UrlService {
 
     @Override
     public void removeByCutUrl(String cutUrl) {
+        //reserved links
+        if (cutUrl.equals("g") || cutUrl.equals("y") || cutUrl.equals("gm") || cutUrl.equals("j") || cutUrl.equals("r")) {
+            return;
+        }
+
         if (urlRepository.existCutUrl(cutUrl)) {
             urlRepository.removeByCutUrl(cutUrl);
         }
